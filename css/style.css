@@ -45,7 +45,6 @@ body {
 h1 {
     font-family: 'Outfit', sans-serif;
     font-size: clamp(1.8rem, 10vw, 3.75rem) !important;
-    /* Lower min for small phones */
     line-height: 1.1;
     word-break: break-word;
 }
@@ -151,7 +150,7 @@ h4 {
     transform: translateY(0);
 }
 
-/* --- Instagram Chat Demo Styles (Faithful to Reference) --- */
+/* --- Instagram Chat Demo Styles --- */
 
 .chat-container {
     width: 100%;
@@ -199,7 +198,6 @@ h4 {
     scroll-behavior: smooth;
 }
 
-/* Ensure messages are aligned to sides */
 .message-group {
     display: flex;
     flex-direction: column;
@@ -229,12 +227,11 @@ h4 {
 }
 
 .seen-status {
-    font-size: 12px;
+    font-size: 11px;
     color: #8e8e8e;
-    margin-top: 2px;
+    margin-top: 4px;
     align-self: flex-end;
     padding-right: 4px;
-    display: none;
 }
 
 .typing-indicator {
@@ -264,88 +261,6 @@ h4 {
     }
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #fff;
-    color: var(--text-dark);
-    overflow-x: hidden;
-    /* Prevent horizontal scroll */
-    width: 100%;
-}
-
-/* --- Responsive Adjustments --- */
-
-@media (max-width: 768px) {
-    .chat-container {
-        width: 100%;
-        max-width: 100% !important;
-        height: auto;
-        aspect-ratio: 9/16;
-        max-height: 600px;
-        border-radius: 20px;
-    }
-
-    .hero-gradient {
-        padding-top: 3rem;
-        padding-bottom: 2rem;
-    }
-
-    h1 {
-        font-size: 2rem !important;
-        /* More aggressive for mobile */
-        line-height: 1.15 !important;
-    }
-
-    .glass-card {
-        padding: 1.5rem !important;
-    }
-
-    section {
-        padding-left: 1.25rem !important;
-        padding-right: 1.25rem !important;
-    }
-}
-
-@media (max-width: 380px) {
-    h1 {
-        font-size: 1.75rem !important;
-    }
-
-    .btn-primary {
-        padding-left: 0.75rem !important;
-        padding-right: 0.75rem !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .chat-header {
-        padding: 14px 16px;
-    }
-
-    .message {
-        font-size: 14px;
-        padding: 10px 16px;
-    }
-
-    .avatar {
-        width: 36px;
-        height: 36px;
-    }
-
-    .ig-suggestions {
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 8px 10px;
-        gap: 6px;
-    }
-
-    .ig-suggestions button {
-        padding: 8px 12px;
-        font-size: 11.5px;
-        border-radius: 12px;
-    }
-}
-
 .ig-suggestions {
     display: flex;
     gap: 10px;
@@ -362,7 +277,7 @@ body {
 
 .ig-suggestions button {
     flex: 0 0 auto;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #ig-border;
     background: #fff;
     color: #262626;
     padding: 10px 18px;
@@ -372,6 +287,7 @@ body {
     cursor: pointer;
     white-space: nowrap;
     transition: background 0.15s;
+    border: 1px solid #dbdbdb;
 }
 
 .chat-footer {
@@ -443,4 +359,77 @@ body {
     background: var(--primary-dim);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.1);
+}
+
+/* --- Media Queries (Always at the end) --- */
+
+@media (max-width: 768px) {
+    .chat-container {
+        width: 100%;
+        max-width: 100% !important;
+        height: auto;
+        aspect-ratio: 9/16;
+        max-height: 600px;
+        border-radius: 20px;
+    }
+
+    .hero-gradient {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+    }
+
+    h1 {
+        font-size: 2rem !important;
+        line-height: 1.15 !important;
+    }
+
+    .glass-card {
+        padding: 1.5rem !important;
+    }
+
+    section {
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .chat-header {
+        padding: 14px 16px;
+    }
+
+    .message {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+
+    .avatar {
+        width: 36px;
+        height: 36px;
+    }
+
+    .ig-suggestions {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 6px 8px;
+        gap: 5px;
+        overflow-x: visible;
+    }
+
+    .ig-suggestions button {
+        padding: 5px 10px;
+        font-size: 9.5px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    h1 {
+        font-size: 1.75rem !important;
+    }
+
+    .btn-primary {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
 }
