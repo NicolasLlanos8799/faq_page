@@ -277,7 +277,6 @@ h4 {
 
 .ig-suggestions button {
     flex: 0 0 auto;
-    border: 1px solid #ig-border;
     background: #fff;
     color: #262626;
     padding: 10px 18px;
@@ -286,8 +285,13 @@ h4 {
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
-    transition: background 0.15s;
-    border: 1px solid #dbdbdb;
+    transition: background 0.15s, border-color 0.15s;
+    border: 1px solid var(--ig-border);
+}
+
+.ig-suggestions button:hover {
+    background: var(--ig-light-grey);
+    border-color: #c7c7c7;
 }
 
 .chat-footer {
