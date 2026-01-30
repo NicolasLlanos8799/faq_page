@@ -96,6 +96,25 @@ if (igSuggestions) {
     });
 }
 
+// Logic for outside example buttons
+document.querySelectorAll(".example-msg-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const text = btn.dataset.text;
+        if (!text) return;
+
+        // 1. Send message
+        addMessage(text, "user");
+        if (igSuggestions) igSuggestions.style.display = "none";
+        sendToWebhook(text);
+
+        // 2. Scroll to chat
+        const demoSection = document.getElementById("demo");
+        if (demoSection) {
+            demoSection.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+});
+
 function handleSubmit() {
     const text = chatInput.value.trim();
     if (!text) return;
