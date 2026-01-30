@@ -287,6 +287,12 @@ h4 {
     white-space: nowrap;
     transition: background 0.15s, border-color 0.15s;
     border: 1px solid var(--ig-border);
+    touch-action: manipulation;
+}
+
+.example-msg-btn {
+    touch-action: manipulation;
+    transform: translateZ(0);
 }
 
 .ig-suggestions button:hover {
@@ -413,17 +419,17 @@ h4 {
     }
 
     .ig-suggestions {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: center;
         padding: 6px 8px;
-        gap: 5px;
-        overflow-x: visible;
+        gap: 6px;
+        overflow-x: auto;
     }
 
     .ig-suggestions button {
-        padding: 5px 10px;
-        font-size: 9.5px;
-        border-radius: 12px;
+        padding: 5px 8.5px;
+        font-size: 9px;
+        border-radius: 11px;
     }
 }
 

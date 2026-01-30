@@ -5,7 +5,11 @@ const WEBHOOK_URL = "https://nicolasllanossw10.app.n8n.cloud/webhook/iagency/web
 const BUSINESS_ID = "urban_style_01";
 const USER_ID = "ig_" + Math.random().toString(36).slice(2, 6);
 
-lucide.createIcons(); // Inicializar iconos
+try {
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+} catch (e) {
+    console.error("Lucide icons error:", e);
+}
 
 // ================================
 // DOM
@@ -96,23 +100,31 @@ if (igSuggestions) {
     });
 }
 
-// Logic for outside example buttons
-document.querySelectorAll(".example-msg-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const text = btn.dataset.text;
-        if (!text) return;
+// Logic for example buttons with mobile-friendly delegation
+document.addEventListener("click", e => {
+    const btn = e.target.closest(".example-msg-btn");
+    if (!btn) return;
 
-        // 1. Send message
-        addMessage(text, "user");
-        if (igSuggestions) igSuggestions.style.display = "none";
-        sendToWebhook(text);
+    e.preventDefault();
+    const text = btn.dataset.text;
+    if (!text) return;
 
-        // 2. Scroll to chat
+    // Pulse feedback
+    btn.style.opacity = "0.6";
+    setTimeout(() => btn.style.opacity = "1", 150);
+
+    // 1. Send message
+    addMessage(text, "user");
+    if (igSuggestions) igSuggestions.style.display = "none";
+    sendToWebhook(text);
+
+    // 2. Scroll to chat (delayed for mobile stability)
+    setTimeout(() => {
         const demoSection = document.getElementById("demo");
         if (demoSection) {
-            demoSection.scrollIntoView({ behavior: "smooth" });
+            demoSection.scrollIntoView({ behavior: "smooth", block: "center" });
         }
-    });
+    }, 150);
 });
 
 function handleSubmit() {
