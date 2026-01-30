@@ -421,15 +421,15 @@ h4 {
     .ig-suggestions {
         flex-wrap: nowrap;
         justify-content: center;
-        padding: 6px 8px;
-        gap: 6px;
+        padding: 8px 10px;
+        gap: 7px;
         overflow-x: auto;
     }
 
     .ig-suggestions button {
-        padding: 5px 8.5px;
-        font-size: 9px;
-        border-radius: 11px;
+        padding: 6.5px 12px;
+        font-size: 10px;
+        border-radius: 13px;
     }
 }
 
