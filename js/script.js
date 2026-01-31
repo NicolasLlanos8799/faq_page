@@ -23,6 +23,25 @@ const extraIcons = document.getElementById("extra-icons");
 const typingIndicator = document.getElementById("typing-indicator");
 
 // ================================
+// GA4 TRACKING HELPER
+// ================================
+function trackEvent(eventName, params = {}) {
+    if (typeof gtag === 'function') {
+        gtag('event', eventName, params);
+    }
+}
+
+// Session-level flags to prevent duplicate events
+window.trackingFlags = {
+    demoViewed: false,
+    chatEngaged: false,
+    scroll75: false
+};
+
+// Counter to qualify engagement
+let messagesSent = 0;
+
+// ================================
 // HELPERS
 // ================================
 function addMessage(text, from) {
@@ -66,6 +85,14 @@ async function sendToWebhook(text) {
         const data = await res.json().catch(() => null);
         const reply = data?.reply || data?.respuesta || data?.message || "Gracias por tu mensaje 😊";
 
+        // Track successful message send (server response received)
+        trackEvent('chat_message_sent', {
+            source: window.currentMsgSource || 'manual', // Can be extended for: voice, image, whatsapp
+            message_length: text.length
+        });
+        messagesSent++;
+        window.currentMsgSource = 'manual'; // Reset to default
+
         setTimeout(() => {
             typingIndicator.style.display = "none";
             addMessage(reply, "bot");
@@ -96,6 +123,17 @@ if (igSuggestions) {
         const text = btn.dataset.text;
         addMessage(text, "user");
         igSuggestions.style.display = "none";
+
+        // GA4 tracking (Optimized: Using ID instead of long strings)
+        let suggestionId = 'otro';
+        const lower = text.toLowerCase();
+        if (lower.includes('horario') || lower.includes('hora')) suggestionId = 'horarios';
+        else if (lower.includes('precio') || lower.includes('cuanto') || lower.includes('costa')) suggestionId = 'precios';
+        else if (lower.includes('ubica') || lower.includes('donde') || lower.includes('zona')) suggestionId = 'ubicacion';
+
+        trackEvent('chat_suggestion_click', { suggestion_id: suggestionId });
+        window.currentMsgSource = 'suggestion';
+
         sendToWebhook(text);
     });
 }
@@ -116,6 +154,20 @@ document.addEventListener("click", e => {
     // 1. Send message
     addMessage(text, "user");
     if (igSuggestions) igSuggestions.style.display = "none";
+
+    // GA4 tracking (Optimized: Using Type instead of long strings)
+    let messageType = 'otro';
+    const lower = text.toLowerCase();
+    if (lower.includes('horario') || lower.includes('hora')) messageType = 'horarios';
+    else if (lower.includes('precio') || lower.includes('cuanto') || lower.includes('costa')) messageType = 'precios';
+    else if (lower.includes('ubica') || lower.includes('donde') || lower.includes('zona')) messageType = 'ubicacion';
+
+    trackEvent('example_message_click', {
+        message_type: messageType,
+        message_length: text.length
+    });
+    window.currentMsgSource = 'example';
+
     sendToWebhook(text);
 
     // 2. Scroll to chat (delayed for mobile stability)
@@ -189,6 +241,12 @@ if (contactForm) {
                 contactForm.reset();
                 contactSuccess.classList.remove("hidden");
                 contactSuccess.style.display = "block";
+
+                // GA4 tracking: lead conversion
+                trackEvent('lead_form_submit', {
+                    form_id: 'contactForm',
+                    product: 'asistente_faq'
+                });
             } else {
                 contactError.classList.remove("hidden");
                 contactError.style.display = "block";
@@ -209,3 +267,79 @@ if (contactForm) {
 setTimeout(() => {
     addMessage("👋 Hola! Bienvenido a Urban Style.\n\nPodés elegir una opción rápida o escribirnos tu consulta.", "bot");
 }, 400);
+
+// ===================================
+// === GA4 Tracking Implementations ===
+// ===================================
+
+// 1. demo_click Tracking
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href*="#demo"]');
+    if (link) {
+        // NOTE: In the future, this click tracking can be centralized into a single global listener 
+        // to reduce multiple document:click handlers.
+        let location = 'other';
+        if (link.closest('nav')) location = 'nav';
+        else if (link.closest('header')) location = 'hero';
+        else if (link.closest('footer')) location = 'footer';
+        else if (link.closest('section')) location = 'features';
+
+        trackEvent('demo_click', { location: location });
+    }
+
+    // 2. cta_comenzar_click Tracking
+    const cta = e.target.closest('a[href="#contact"]');
+    if (cta && cta.closest('header')) {
+        trackEvent('cta_comenzar_click', { section: 'hero' });
+    }
+});
+
+// 3. chat_engaged tracking (+30s of interaction)
+let interactionStartTime = null;
+const startInteractionTimer = () => {
+    if (!interactionStartTime) {
+        interactionStartTime = Date.now();
+        setTimeout(() => {
+            // Refined: Only engaged if user stayed 30s AND sent at least 1 message
+            if (!window.trackingFlags.chatEngaged && messagesSent > 0) {
+                trackEvent('chat_engaged', { time_seconds: 30 });
+                window.trackingFlags.chatEngaged = true;
+            }
+        }, 30000);
+    }
+};
+
+if (chatInput) chatInput.addEventListener('focus', startInteractionTimer);
+if (chatForm) chatForm.addEventListener('click', startInteractionTimer);
+
+// 4. demo_view Tracking (IntersectionObserver)
+const demoSection = document.getElementById('demo');
+if (demoSection) {
+    const demoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !window.trackingFlags.demoViewed) {
+                trackEvent('demo_view', { view_type: 'demo_chat' });
+                window.trackingFlags.demoViewed = true;
+                demoObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    demoObserver.observe(demoSection);
+}
+
+// 5. scroll_75 tracking
+window.addEventListener('scroll', () => {
+    if (window.trackingFlags.scroll75) return;
+
+    const h = document.documentElement;
+    const b = document.body;
+    const st = 'scrollTop';
+    const sh = 'scrollHeight';
+
+    const percent = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100;
+
+    if (percent >= 75) {
+        trackEvent('scroll_75');
+        window.trackingFlags.scroll75 = true;
+    }
+}, { passive: true });
