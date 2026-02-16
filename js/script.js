@@ -265,7 +265,7 @@ if (contactForm) {
 // WELCOME
 // ================================
 setTimeout(() => {
-    addMessage("👋 Hola! Bienvenido a Urban Style.\n\nPodés elegir una opción rápida o escribirnos tu consulta.", "bot");
+    addMessage("👋 Hola soy Sofi el asistente virtual! Bienvenido a Urban Style.\n\nPodés elegir una opción rápida o escribirnos tu consulta.", "bot");
 }, 400);
 
 // ===================================

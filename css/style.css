@@ -443,3 +443,25 @@ h4 {
         padding-right: 0.75rem !important;
     }
 }
+
+/* --- New Additions --- */
+.microcopy {
+    margin-top: 12px;
+    font-size: 14px;
+    opacity: .85;
+}
+
+.hero-bullets {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 14px 0 6px;
+    font-size: 14px;
+}
+
+.eyebrow {
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: 12px;
+    opacity: .75;
+}
