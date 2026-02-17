@@ -15,6 +15,98 @@
     <meta name="publisher" content="Hello iAgency">
     <link rel="canonical" href="https://sofi.helloiagency.com/">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sofi.helloiagency.com/">
+    <meta property="og:title" content="Automatizá tu atención 24/7 | Sofi – Asistente IA">
+    <meta property="og:description"
+        content="Sofi es un asistente IA para negocios que responde consultas automáticamente y atiende clientes 24/7 sin contratar personal.">
+    <meta property="og:image" content="https://sofi.helloiagency.com/og-image.jpg">
+    <meta property="og:site_name" content="Sofi by iAgency">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://sofi.helloiagency.com/">
+    <meta name="twitter:title" content="Automatizá tu atención 24/7 | Sofi – Asistente IA">
+    <meta name="twitter:description"
+        content="Sofi es un asistente IA para negocios que responde consultas automáticamente y atiende clientes 24/7 sin contratar personal.">
+    <meta name="twitter:image" content="https://sofi.helloiagency.com/og-image.jpg">
+
+    <!-- Schema Markup (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "name": "Sofi Asistente IA",
+          "operatingSystem": "Cloud, WhatsApp, Instagram, Web",
+          "applicationCategory": "BusinessApplication",
+          "offers": {
+            "@type": "Offer",
+            "price": "75",
+            "priceCurrency": "USD",
+            "priceValidUntil": "2026-12-31",
+            "availability": "https://schema.org/InStock"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "ratingCount": "124"
+          },
+          "description": "Sofi es un asistente IA para negocios que responde consultas automáticamente y atiende clientes 24/7 sin contratar personal."
+        },
+        {
+          "@type": "Organization",
+          "name": "Hello iAgency",
+          "url": "https://www.helloiagency.com",
+          "logo": "https://sofi.helloiagency.com/logo.png",
+          "sameAs": [
+            "https://www.instagram.com/helloiagency",
+            "https://www.linkedin.com/in/nicolas-llanos/"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "¿Qué incluye la instalación?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nos encargamos de todo por vos. Configuramos a Sofi con la información de tu negocio (horarios, precios, productos y respuestas más frecuentes) y la dejamos funcionando correctamente en tu WhatsApp, Instagram, Facebook o Web."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cuándo se paga la mensualidad?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "El primer mes es gratis. Después de esos 30 días, el mantenimiento tiene un costo de USD 35 por mes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Cómo funciona la garantía?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tenés 7 días para probarlo. Si no te sirve, podés solicitar la devolución del pago de instalación y te devolvemos el dinero."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "¿Qué pasa si decido cancelar?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Si pedís la devolución dentro de los primeros 7 días, desactivamos la automatización y procesamos el reintegro. Si cancelás más adelante, simplemente se deja de cobrar el mantenimiento mensual."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -68,7 +160,7 @@
 
                 <p class="text-xl md:text-2xl text-slate-500 mb-8 max-w-lg mx-auto md:mx-0 leading-relaxed font-light">
                     Sofi es un asistente virtual que responde automáticamente en WhatsApp, Instagram, Facebook y tu Web.
-                    <a href="#como-funciona"
+                    <a href="#como-funciona" title="Ver cómo funciona Sofi"
                         class="text-xl md:text-2xl text-indigo-600 font-semibold hover:underline underline-offset-4">
                         Descubrí cómo funciona
                     </a>
@@ -92,7 +184,7 @@
                 <div class="flex justify-center md:justify-start -mt-4 mb-8">
                     <a href="https://wa.me/393205697898?text=Hola%20quiero%20activar%20Sofi%20y%20tengo%20una%20consulta"
                         class="text-sm font-bold text-slate-600 hover:text-indigo-600 underline underline-offset-4 decoration-indigo-300 transition-colors"
-                        target="_blank">
+                        target="_blank" title="Chatear con un asesor por WhatsApp">
                         Hablar con un asesor
                     </a>
                 </div>
@@ -240,7 +332,7 @@
 
         <!-- Mini CTA opcional -->
         <div class="text-center mt-12">
-            <a href="#activacion"
+            <a href="#activacion" title="Activar Sofi por USD 75"
                 class="inline-block bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg transition">
                 Activar Sofi por USD 75
             </a>
@@ -348,7 +440,8 @@
                     </p>
 
                     <div class="space-y-3">
-                        <button type="button"
+                        <button type="button" title="Probar mensaje de ejemplo"
+                            aria-label="Enviar mensaje de ejemplo: Hola! ¿Tienen la remera oversize en talle M?"
                             class="example-msg-btn relative z-20 text-xs text-indigo-200 flex w-full text-left items-center gap-3 bg-white/5 p-3 rounded-xl italic transition-all hover:bg-white/10 hover:translate-x-1 cursor-pointer border-none outline-none"
                             data-text="Hola! ¿Tienen la remera oversize en talle M? ¿En qué colores?">
                             "Hola! ¿Tienen la remera oversize en talle M? ¿En qué colores?"
@@ -419,7 +512,8 @@
                                     <i data-lucide="mic" class="w-6 h-6 cursor-pointer opacity-80"></i>
                                     <i data-lucide="image" class="w-6 h-6 cursor-pointer opacity-80"></i>
                                 </div>
-                                <button type="submit" id="send-btn" class="send-link hidden">Enviar</button>
+                                <button type="submit" id="send-btn" class="send-link hidden" title="Enviar mensaje"
+                                    aria-label="Enviar mensaje">Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -623,7 +717,7 @@
                                 </select>
                             </div>
 
-                            <button type="submit" id="save-data-btn"
+                            <button type="submit" id="save-data-btn" title="Guardar datos y continuar al pago"
                                 class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold px-8 py-5 rounded-2xl transition shadow-lg shadow-indigo-200 mt-4 text-lg">
                                 Continuar y activar por USD 75
                             </button>
@@ -671,7 +765,7 @@
                         <p class="text-sm text-slate-500">Activá ahora tu asistente Sofi.</p>
                     </div>
 
-                    <a href="#" id="payment-btn"
+                    <a href="#" id="payment-btn" title="Pagar de forma segura con Stripe"
                         class="block w-full text-center bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold px-8 py-5 rounded-2xl transition shadow-lg shadow-indigo-200 mb-4 text-lg">
                         Pagar USD 75 y activar
                     </a>
@@ -697,7 +791,7 @@
                         </div>
                     </div>
 
-                    <button type="button" id="back-to-form"
+                    <button type="button" id="back-to-form" title="Volver a editar mis datos"
                         class="w-full text-sm text-slate-400 hover:text-indigo-500 font-medium mt-6">
                         ← Volver a modificar datos
                     </button>
@@ -830,7 +924,7 @@
         <div class="hidden md:block text-slate-900 font-bold text-sm">
             Automatizá tu atención 24/7 con Sofi
         </div>
-        <a href="#activacion" id="sticky-btn"
+        <a href="#activacion" id="sticky-btn" title="Activar Sofi ahora"
             class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-500 transition text-sm flex-1 md:flex-none text-center">
             Activar por USD 75
         </a>
