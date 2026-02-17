@@ -214,49 +214,55 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 // ================================
 // CONTACT FORM
 // ================================
-const contactForm = document.getElementById("contactForm");
-const contactSuccess = document.getElementById("contactSuccess");
-const contactError = document.getElementById("contactError");
-const contactSubmitBtn = document.getElementById("contactSubmitBtn");
+// ================================
+// ACTIVATION FLOW (1-Click: Formspree -> Stripe Redirect)
+// ================================
+const activationForm = document.getElementById("activationForm");
 
-if (contactForm) {
-    contactForm.addEventListener("submit", async (e) => {
+if (activationForm) {
+    activationForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        contactSubmitBtn.disabled = true;
-        contactSubmitBtn.textContent = "Enviando...";
-        contactSuccess.style.display = "none";
-        contactError.style.display = "none";
+        const btn = activationForm.querySelector("button[type='submit']");
+        const originalText = "Continuar al pago de configuración";
 
-        const formData = new FormData(contactForm);
+        // 1. Loading State
+        btn.disabled = true;
+        btn.textContent = "Enviando...";
+
+        // Remove previous error message if exists
+        const existingError = activationForm.querySelector(".form-error-msg");
+        if (existingError) existingError.remove();
+
+        const formData = new FormData(activationForm);
 
         try {
-            const response = await fetch(contactForm.action, {
+            // 2. Fetch Formspree
+            const response = await fetch("https://formspree.io/f/xrbgpegn", {
                 method: "POST",
                 body: formData,
                 headers: { 'Accept': 'application/json' }
             });
 
             if (response.ok) {
-                contactForm.reset();
-                contactSuccess.classList.remove("hidden");
-                contactSuccess.style.display = "block";
+                // 3. Success: Open Stripe Payment Link in new tab
+                window.open("https://buy.stripe.com/00waEW9z7cYsdvScFL43S03", "_blank");
 
-                // GA4 tracking: lead conversion
-                trackEvent('lead_form_submit', {
-                    form_id: 'contactForm',
-                    product: 'asistente_faq'
-                });
+                // Restore button state
+                btn.disabled = false;
+                btn.textContent = originalText;
             } else {
-                contactError.classList.remove("hidden");
-                contactError.style.display = "block";
+                throw new Error("Formspree submit failed");
             }
-        } catch (error) {
-            contactError.classList.remove("hidden");
-            contactError.style.display = "block";
-        } finally {
-            contactSubmitBtn.disabled = false;
-            contactSubmitBtn.textContent = "Solicitar mi Asistente FAQ";
+        } catch (err) {
+            // 4. Error Handling
+            btn.disabled = false;
+            btn.textContent = originalText;
+
+            const errorMsg = document.createElement("p");
+            errorMsg.className = "form-error-msg text-red-500 text-sm mt-2 text-center";
+            errorMsg.textContent = "No pudimos enviar tus datos. Revisá la conexión e intentá nuevamente.";
+            btn.after(errorMsg);
         }
     });
 }
