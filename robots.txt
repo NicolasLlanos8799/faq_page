@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://asistente-faq.helloiagency.com/sitemap.xml
+Sitemap: https://sofi.helloiagency.com/sitemap.xml

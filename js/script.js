@@ -271,7 +271,7 @@ if (activationForm) {
 // WELCOME
 // ================================
 setTimeout(() => {
-    addMessage("👋 Hola soy Sofi el asistente virtual! Bienvenido a Urban Style.\n\nPodés elegir una opción rápida o escribirnos tu consulta.", "bot");
+    addMessage("👋 Hola soy Sofi el asistente virtual! Bienvenido a Urban Style.\n\nEscribinos tu consulta.", "bot");
 }, 400);
 
 // ===================================
@@ -349,3 +349,151 @@ window.addEventListener('scroll', () => {
         window.trackingFlags.scroll75 = true;
     }
 }, { passive: true });
+
+// ================================
+// STICKY CTA LOGIC
+// ================================
+const stickyCta = document.getElementById('sticky-cta');
+const stickyBtn = document.getElementById('sticky-btn');
+const activationSection = document.getElementById('activacion');
+const footer = document.querySelector('footer');
+
+if (stickyCta && stickyBtn) {
+    let isFooterVisible = false;
+
+    // Detect if footer is visible to hide sticky CTA
+    if (footer) {
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                isFooterVisible = entry.isIntersecting;
+                // Force update immediately
+                updateStickyVisibility();
+            });
+        }, { threshold: 0.1 }); // Trigger as soon as 10% of footer is visible
+        footerObserver.observe(footer);
+    }
+
+    function updateStickyVisibility() {
+        const scrollY = window.scrollY;
+        const triggerHeight = 600; // Show after hero/pain
+
+        // Hide if footer is visible OR if user hasn't scrolled past hero
+        if (isFooterVisible || scrollY <= triggerHeight) {
+            stickyCta.classList.add('translate-y-full');
+        } else {
+            stickyCta.classList.remove('translate-y-full');
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        updateStickyVisibility();
+
+        // 2. Change Text based on context (Logic remains same)
+        // If viewing activation section
+        if (activationSection) {
+            const rect = activationSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                stickyBtn.textContent = "Continuar";
+                return;
+            }
+        }
+
+        // If viewed demo (using existing flag)
+        if (window.trackingFlags && window.trackingFlags.demoViewed) {
+            stickyBtn.textContent = "Activar Sofi";
+        } else {
+            stickyBtn.textContent = "Activar por USD 75";
+        }
+    }, { passive: true });
+}
+
+// ================================
+// A/B TESTING SCAFFOLDING
+// ================================
+window.__AB_VARIANT = 'A'; // Default. Use URL param ?v=B to override.
+
+// Simple URL override
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('v')) {
+    window.__AB_VARIANT = urlParams.get('v').toUpperCase();
+    console.log(`Running A/B Test Variant: ${window.__AB_VARIANT}`);
+}
+
+// Example A/B Logic (Expand as needed)
+if (window.__AB_VARIANT === 'B') {
+    // Implement Variant B changes here via JS if needed
+    // e.g., document.getElementById('hero-headline').textContent = "New Headline";
+}
+
+// ================================
+// ADDITIONAL GA4 TRACKING
+// ================================
+
+// 1. CTA Clicks
+document.querySelectorAll('a[href="#activacion"], a[href="#payment-btn"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        trackEvent('cta_click_activate', {
+            location: btn.closest('header') ? 'nav' :
+                btn.closest('#hero') ? 'hero' :
+                    btn.closest('#sticky-cta') ? 'sticky' : 'body'
+        });
+    });
+});
+
+document.querySelectorAll('a[href="#demo"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        trackEvent('cta_click_demo');
+    });
+});
+
+// 2. Demo Interactions (Example clicks)
+document.querySelectorAll('.example-msg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        trackEvent('demo_example_click', { text: btn.dataset.text });
+    });
+});
+
+// 3. Lead Form
+const leadSubmitBtn = document.getElementById('lead-submit');
+const leadInput = document.getElementById('lead-contact');
+
+if (leadSubmitBtn && leadInput) {
+    leadSubmitBtn.addEventListener('click', () => {
+        const val = leadInput.value.trim();
+        if (!val) {
+            leadInput.classList.add('ring-2', 'ring-rose-500');
+            setTimeout(() => leadInput.classList.remove('ring-2', 'ring-rose-500'), 2000);
+            return;
+        }
+
+        trackEvent('lead_contact_submit', { contact_method: val.includes('@') ? 'instagram' : 'whatsapp' });
+
+        // Redirect or Open WhatsApp (Mocking success for now)
+        // window.location.href = '#activacion'; // Or open WA
+        const waMsg = `Hola, quiero que instalen Sofi. Mi contacto es: ${val}`;
+        window.open(`https://wa.me/5493425664197?text=${encodeURIComponent(waMsg)}`, '_blank');
+    });
+}
+
+// 4. Payment Steps
+const paymentBtn = document.getElementById('payment-btn');
+if (paymentBtn) {
+    paymentBtn.addEventListener('click', () => {
+        trackEvent('payment_click');
+    });
+}
+
+// Observe Payment Section View
+const paymentSection = document.getElementById('step-payment');
+if (paymentSection) {
+    const paymentObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                trackEvent('payment_view');
+                paymentObserver.disconnect();
+            }
+        });
+    });
+    paymentObserver.observe(paymentSection);
+}
+

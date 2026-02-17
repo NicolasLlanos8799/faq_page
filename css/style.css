@@ -479,3 +479,20 @@ h4 {
     justify-content: center;
     margin-top: 16px;
 }
+
+/* --- Accessibility & CRO --- */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.example-msg-btn:focus-visible {
+    background: rgba(255, 255, 255, 0.1);
+    outline: 2px solid var(--primary-light);
+}
+
+/* Ensure legible disclaimers */
+.text-xs {
+    font-size: 0.75rem;
+    /* 12px min */
+}
