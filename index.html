@@ -34,78 +34,47 @@
 
     <!-- Schema Markup (JSON-LD) -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "name": "Preguntas frecuentes sobre Sofi - Asistente IA",
+  "mainEntity": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "SoftwareApplication",
-          "name": "Sofi Asistente IA",
-          "operatingSystem": "Cloud, WhatsApp, Instagram, Web",
-          "applicationCategory": "BusinessApplication",
-          "offers": {
-            "@type": "Offer",
-            "price": "75",
-            "priceCurrency": "USD",
-            "priceValidUntil": "2026-12-31",
-            "availability": "https://schema.org/InStock"
-          },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.9",
-            "ratingCount": "124"
-          },
-          "description": "Sofi es un asistente IA para negocios que responde consultas automáticamente y atiende clientes 24/7 sin contratar personal."
-        },
-        {
-          "@type": "Organization",
-          "name": "Hello iAgency",
-          "url": "https://www.helloiagency.com",
-          "logo": "https://sofi.helloiagency.com/logo.png",
-          "sameAs": [
-            "https://www.instagram.com/helloiagency",
-            "https://www.linkedin.com/in/nicolas-llanos/"
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "¿Qué incluye la instalación?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Nos encargamos de todo por vos. Configuramos a Sofi con la información de tu negocio (horarios, precios, productos y respuestas más frecuentes) y la dejamos funcionando correctamente en tu WhatsApp, Instagram, Facebook o Web."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Cuándo se paga la mensualidad?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "El primer mes es gratis. Después de esos 30 días, el mantenimiento tiene un costo de USD 35 por mes."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Cómo funciona la garantía?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Tenés 7 días para probarlo. Si no te sirve, podés solicitar la devolución del pago de instalación y te devolvemos el dinero."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "¿Qué pasa si decido cancelar?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Si pedís la devolución dentro de los primeros 7 días, desactivamos la automatización y procesamos el reintegro. Si cancelás más adelante, simplemente se deja de cobrar el mantenimiento mensual."
-              }
-            }
-          ]
-        }
-      ]
+      "@type": "Question",
+      "name": "¿Qué incluye la instalación?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nos encargamos de todo por vos. Configuramos a Sofi con la información de tu negocio (horarios, precios, productos y respuestas más frecuentes) y la dejamos funcionando correctamente en tu WhatsApp, Instagram, Facebook o Web."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo se paga la mensualidad?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El primer mes es gratis. Después de esos 30 días, el mantenimiento tiene un costo de USD 35 por mes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo funciona la garantía?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Tenés 7 días para probarlo. Si no te sirve, podés solicitar la devolución del pago de instalación y te devolvemos el dinero."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si decido cancelar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si pedís la devolución dentro de los primeros 7 días, desactivamos la automatización y procesamos el reintegro. Si cancelás más adelante, simplemente se deja de cobrar el mantenimiento mensual."
+      }
     }
-    </script>
+  ]
+}
+</script>
+
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -800,23 +769,31 @@
                 <!-- Paso 3: Post-Pago (Mensaje de éxito oculto) -->
                 <div id="step-success" class="hidden p-8 md:p-12 text-center">
                     <div
-                        class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i data-lucide="check" class="w-8 h-8"></i>
+                        class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-emerald-100 animate-[bounce_1s_ease-in-out_1]">
+                        <i data-lucide="check" class="w-10 h-10"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-slate-900 mb-4">Activación en proceso</h3>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Hemos recibido tu pago correctamente.<br>
-                        En las próximas 24 horas nos contactaremos para comenzar la configuración.
+                    <h3 class="text-3xl font-extrabold text-slate-900 mb-4">¡Solicitud recibida!</h3>
+                    <p class="text-slate-600 mb-8 text-lg leading-relaxed max-w-lg mx-auto">
+                        Gracias por tu interés. Un especialista de iAgency te contactará <strong>en las próximas
+                            horas</strong> para coordinar la activación y el pago.
                     </p>
-                    <p class="text-indigo-600 font-medium mb-8">
-                        Sofi estará activa dentro de las próximas 48 horas.
-                    </p>
-                    <div class="bg-indigo-50 p-6 rounded-2xl mb-8">
-                        <p class="text-sm text-slate-700 mb-2">Durante el primer mes podrás utilizar a Sofi sin
-                            costo mensual.</p>
-                        <p class="text-xs text-slate-500">Antes de finalizar ese período, configuraremos el débito
-                            automático de USD 35/mes.</p>
+
+                    <div class="bg-indigo-50 border border-indigo-100 p-6 rounded-2xl mb-8 max-w-md mx-auto">
+                        <p class="text-indigo-800 font-bold mb-2 flex items-center justify-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5"></i>
+                            Próximos pasos:
+                        </p>
+                        <p class="text-sm text-indigo-700">
+                            Revisaremos tus datos y te escribiremos para dejar a Sofi funcionando en tu negocio.
+                        </p>
                     </div>
+
+                    <a href="https://wa.me/393205697898?text=Hola%20acabo%20de%20completar%20el%20formulario%20para%20Sofi"
+                        target="_blank"
+                        class="inline-flex items-center justify-center gap-2 text-indigo-600 font-bold hover:text-indigo-700 transition">
+                        <i data-lucide="message-circle" class="w-5 h-5"></i>
+                        Enviar mensaje por WhatsApp ahora
+                    </a>
                 </div>
 
             </div>

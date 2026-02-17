@@ -245,10 +245,24 @@ if (activationForm) {
             });
 
             if (response.ok) {
-                // 3. Success: Open Stripe Payment Link in new tab
-                window.open("https://buy.stripe.com/00waEW9z7cYsdvScFL43S03", "_blank");
+                // 3. Success: Show Success Message (Lead Gen Flow)
+                // Hide Form
+                if (document.getElementById('step-form')) {
+                    document.getElementById('step-form').style.display = 'none';
+                }
 
-                // Restore button state
+                // Show Success
+                const successDiv = document.getElementById('step-success');
+                if (successDiv) {
+                    successDiv.classList.remove('hidden');
+                    // Re-run Lucide icons for the new check icon
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+                    // Optional: Scroll to success message
+                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                // Restore button state (though hidden)
                 btn.disabled = false;
                 btn.textContent = originalText;
             } else {
